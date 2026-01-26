@@ -1,0 +1,71 @@
+body,html{margin:0;font-family:Arial;background:black;color:gold}
+
+#bgVideo{
+ position:fixed;
+ right:0;bottom:0;
+ min-width:100%;
+ min-height:100%;
+ z-index:-1;
+ filter:brightness(0.3);
+}
+
+header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:15px;
+}
+
+header img{width:50px}
+
+.products{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+ gap:20px;
+ padding:20px;
+}
+
+.card{
+ background:#111;
+ padding:15px;
+ border-radius:15px;
+ text-align:center;
+ cursor:pointer;
+ transition:.3s;
+}
+
+.card:hover{transform:scale(1.05)}
+
+.card img{
+ width:100%;
+ border-radius:12px;
+}
+
+.cartBtn{
+ position:fixed;
+ bottom:20px;
+ right:20px;
+ padding:15px;
+ background:gold;
+ border:none;
+ border-radius:50%;
+ font-size:20px;
+}
+
+#modal{
+ position:fixed;
+ top:0;left:0;
+ width:100%;height:100%;
+ background:rgba(0,0,0,0.8);
+ display:none;
+ justify-content:center;
+ align-items:center;
+}
+
+.modalBox{
+ background:#111;
+ padding:20px;
+ border-radius:15px;
+ width:90%;
+ max-width:400px;
+}
