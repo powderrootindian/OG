@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Powder Root – Premium Natural Powders</title>
-<link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-VwmmnGZBPGctP8bWp_ozBBTw45-eYds",
@@ -23,6 +23,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 window.auth = getAuth(app);
 window.provider = new GoogleAuthProvider();
+window.signInWithPopup = signInWithPopup;
+</script>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init("YOUR_PUBLIC_KEY");
+})();
 </script>
 </head>
 
@@ -34,7 +43,7 @@ window.provider = new GoogleAuthProvider();
 
 <header>
   <img src="assets/logo.png" class="logo">
-  <button onclick="login()" id="loginBtn">Login with Google</button>
+  <button id="loginBtn" onclick="login()">Login with Google</button>
 </header>
 
 <section class="hero">
@@ -43,44 +52,33 @@ window.provider = new GoogleAuthProvider();
 </section>
 
 <section class="products">
+  <div class="product">
+    <img src="assets/onion.png">
+    <h3>Onion Powder</h3>
+    <p>₹349</p>
+    <button onclick="addToCart('Onion Powder',349)">Add to Cart</button>
+  </div>
 
-<div class="product">
-<img src="assets/onion.png">
-<h3>Onion Powder</h3>
-<p>₹349</p>
-<button onclick="addToCart('Onion Powder',349)">Add to Cart</button>
-</div>
+  <div class="product">
+    <img src="assets/garlic.png">
+    <h3>Garlic Powder</h3>
+    <p>₹299</p>
+    <button onclick="addToCart('Garlic Powder',299)">Add to Cart</button>
+  </div>
 
-<div class="product">
-<img src="assets/garlic.png">
-<h3>Garlic Powder</h3>
-<p>₹299</p>
-<button onclick="addToCart('Garlic Powder',299)">Add to Cart</button>
-</div>
-
-<div class="product">
-<img src="assets/ginger.png">
-<h3>Ginger Powder</h3>
-<p>₹299</p>
-<button onclick="addToCart('Ginger Powder',299)">Add to Cart</button>
-</div>
-
+  <div class="product">
+    <img src="assets/ginger.png">
+    <h3>Ginger Powder</h3>
+    <p>₹299</p>
+    <button onclick="addToCart('Ginger Powder',299)">Add to Cart</button>
+  </div>
 </section>
 
 <section class="cart">
-<h2>Your Cart</h2>
-<div id="cartItems"></div>
-<h3>Total: ₹<span id="total">0</span></h3>
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <h3>Total: ₹<span id="total">0</span></h3>
 
-<button onclick="payNow()">Pay Now</button>
-<button onclick="confirmPaid()">I Have Paid</button>
-</section>
+  <textarea id="address" placeholder="Enter full delivery address" required></textarea>
 
-<footer>
-<p>WhatsApp Orders: <a href="https://wa.me/919096999662">9096999662</a></p>
-<p>© Powder Root India</p>
-</footer>
-
-<script src="app.js"></script>
-</body>
-</html>
+  <button onclick="payNow()">Pay No
