@@ -1,19 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Powder Root – Premium Indian Superfoods</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Powder Root – Premium Natural Powders</title>
 <link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-(function(){
- emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
-})();
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-VwmmnGZBPGctP8bWp_ozBBTw45-eYds",
+  authDomain: "powderroot26.firebaseapp.com",
+  projectId: "powderroot26",
+  storageBucket: "powderroot26.firebasestorage.app",
+  messagingSenderId: "776300724322",
+  appId: "1:776300724322:web:44b8908b6ffe1f6596513b"
+};
+
+const app = initializeApp(firebaseConfig);
+window.auth = getAuth(app);
+window.provider = new GoogleAuthProvider();
 </script>
 </head>
+
 <body>
 
 <video autoplay muted loop id="bgVideo">
@@ -21,38 +33,54 @@
 </video>
 
 <header>
-  <img src="assets/logo.png">
-  <h1>Powder Root</h1>
-  <button id="loginBtn">Login with Google</button>
+  <img src="assets/logo.png" class="logo">
+  <button onclick="login()" id="loginBtn">Login with Google</button>
 </header>
+
+<section class="hero">
+  <h1>POWDER ROOT</h1>
+  <p>Pure. Powerful. Natural.</p>
+</section>
 
 <section class="products">
 
-<div class="card" onclick="openProduct('Onion Powder',349,'assets/onion.jpg')">
-<img src="assets/onion.jpg">
-<h2>Onion Powder</h2>
+<div class="product">
+<img src="assets/onion.png">
+<h3>Onion Powder</h3>
 <p>₹349</p>
+<button onclick="addToCart('Onion Powder',349)">Add to Cart</button>
 </div>
 
-<div class="card" onclick="openProduct('Garlic Powder',299,'assets/garlic.jpg')">
-<img src="assets/garlic.jpg">
-<h2>Garlic Powder</h2>
+<div class="product">
+<img src="assets/garlic.png">
+<h3>Garlic Powder</h3>
 <p>₹299</p>
+<button onclick="addToCart('Garlic Powder',299)">Add to Cart</button>
 </div>
 
-<div class="card" onclick="openProduct('Ginger Powder',299,'assets/ginger.jpg')">
-<img src="assets/ginger.jpg">
-<h2>Ginger Powder</h2>
+<div class="product">
+<img src="assets/ginger.png">
+<h3>Ginger Powder</h3>
 <p>₹299</p>
+<button onclick="addToCart('Ginger Powder',299)">Add to Cart</button>
 </div>
 
 </section>
 
-<button class="cartBtn" onclick="openCart()">🛒 Cart</button>
+<section class="cart">
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+<h3>Total: ₹<span id="total">0</span></h3>
 
-<!-- MODALS -->
-<div id="modal"></div>
+<button onclick="payNow()">Pay Now</button>
+<button onclick="confirmPaid()">I Have Paid</button>
+</section>
 
-<script type="module" src="app.js"></script>
+<footer>
+<p>WhatsApp Orders: <a href="https://wa.me/919096999662">9096999662</a></p>
+<p>© Powder Root India</p>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
