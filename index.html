@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Powder Root – Premium Indian Superfoods</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+ emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+})();
+</script>
+</head>
+<body>
+
+<video autoplay muted loop id="bgVideo">
+  <source src="assets/bg.mp4" type="video/mp4">
+</video>
+
+<header>
+  <img src="assets/logo.png">
+  <h1>Powder Root</h1>
+  <button id="loginBtn">Login with Google</button>
+</header>
+
+<section class="products">
+
+<div class="card" onclick="openProduct('Onion Powder',349,'assets/onion.jpg')">
+<img src="assets/onion.jpg">
+<h2>Onion Powder</h2>
+<p>₹349</p>
+</div>
+
+<div class="card" onclick="openProduct('Garlic Powder',299,'assets/garlic.jpg')">
+<img src="assets/garlic.jpg">
+<h2>Garlic Powder</h2>
+<p>₹299</p>
+</div>
+
+<div class="card" onclick="openProduct('Ginger Powder',299,'assets/ginger.jpg')">
+<img src="assets/ginger.jpg">
+<h2>Ginger Powder</h2>
+<p>₹299</p>
+</div>
+
+</section>
+
+<button class="cartBtn" onclick="openCart()">🛒 Cart</button>
+
+<!-- MODALS -->
+<div id="modal"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
