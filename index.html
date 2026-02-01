@@ -1,84 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Powder Root – Premium Natural Powders</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC-VwmmnGZBPGctP8bWp_ozBBTw45-eYds",
-  authDomain: "powderroot26.firebaseapp.com",
-  projectId: "powderroot26",
-  storageBucket: "powderroot26.firebasestorage.app",
-  messagingSenderId: "776300724322",
-  appId: "1:776300724322:web:44b8908b6ffe1f6596513b"
-};
-
-const app = initializeApp(firebaseConfig);
-window.auth = getAuth(app);
-window.provider = new GoogleAuthProvider();
-window.signInWithPopup = signInWithPopup;
-</script>
-
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-(function(){
-  emailjs.init("lxY_3luPFEJNp2_dO");
-})();
-</script>
+  <meta charset="UTF-8">
+  <title>PowderRoot | Premium Vegetable Powders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <video autoplay muted loop id="bgVideo">
-  <source src="assets/bg.mp4" type="video/mp4">
+  <source src="assets/videos/bg.mp4" type="video/mp4">
 </video>
+<div class="overlay"></div>
 
 <header>
-  <img src="assets/logo.png" class="logo">
-  <button id="loginBtn" onclick="login()">Login with Google</button>
+  <div class="brand">
+    <img src="assets/images/logo.png">
+    <span>PowderRoot</span>
+  </div>
+
+  <div class="social">
+    <a href="https://instagram.com/your_instagram" target="_blank">Instagram</a>
+    <button id="loginBtn">Login</button>
+    <button id="bagBtn">🛍 Bag</button>
+  </div>
 </header>
 
+<main id="mainSite">
+
 <section class="hero">
-  <h1>POWDER ROOT</h1>
-  <p>Pure. Powerful. Natural.</p>
+  <h1>Selected Vegetable Powders</h1>
+  <p>Pure • Premium • Made in India 🇮🇳</p>
+</section>
+
+<section class="about">
+  <h2>About PowderRoot</h2>
+  <p>
+    PowderRoot is a premium Indian brand offering high-quality
+    vegetable powders made from carefully selected farm-fresh produce.
+  </p>
+</section>
+
+<section class="why">
+  <h2>Why Choose PowderRoot?</h2>
+  <div class="why-grid">
+    <div>🌿 100% Natural</div>
+    <div>🇮🇳 Made in India</div>
+    <div>🧪 No Preservatives</div>
+    <div>🥬 Premium Vegetables</div>
+    <div>📦 Hygienic Packaging</div>
+    <div>🚚 Fast Delivery</div>
+  </div>
 </section>
 
 <section class="products">
-  <div class="product">
+  <div class="card">
     <img src="assets/onion.png">
     <h3>Onion Powder</h3>
-    <p>₹349</p>
-    <button onclick="addToCart('Onion Powder',349)">Add to Cart</button>
+    <p class="desc">Rich in nutrients, perfect for daily health.</p>
+    <p class="price">₹299</p>
+    <button onclick="addToBag('Onion Powder',349)">Add to Bag</button>
   </div>
 
-  <div class="product">
+  <div class="card">
     <img src="assets/garlic.png">
     <h3>Garlic Powder</h3>
-    <p>₹299</p>
-    <button onclick="addToCart('Garlic Powder',299)">Add to Cart</button>
-  </div>
-
-  <div class="product">
-    <img src="assets/ginger.png">
-    <h3>Ginger Powder</h3>
-    <p>₹299</p>
-    <button onclick="addToCart('Ginger Powder',299)">Add to Cart</button>
+    <p class="desc">Natural green nutrition in every scoop.</p>
+    <p class="price">₹349</p>
+    <button onclick="addToBag('Garlic Powder',299)">Add to Bag</button>
   </div>
 </section>
 
-<section class="cart">
-  <h2>Your Cart</h2>
-  <div id="cartItems"></div>
-  <h3>Total: ₹<span id="total">0</span></h3>
+<section class="shipping">
+  <h2>Shipping & Delivery</h2>
+  <p>Orders ship within 24–48 hours. Delivery in 3–7 working days.</p>
+</section>
 
-  <textarea id="address" placeholder="Enter full delivery address" required></textarea>
+<section class="contact">
+  <h2>Contact Us</h2>
+  <p>Email: powderrootindian@gmail.com</p>
+  <p>WhatsApp: +91 9096999662</p>
+</section>
 
-  <button onclick="payNow()">Pay No
+</main>
+
+<section id="bagPage" class="bag hidden">
+  <h2>Your Bag</h2>
+  <div id="bagItems"></div>
+
+  <h3>Shipping Address</h3>
+  <input id="name" placeholder="Full Name">
+  <input id="phone" placeholder="Phone Number">
+  <input id="address" placeholder="Full Address">
+  <input id="pincode" placeholder="Pincode">
+
+  <button onclick="checkout()">Proceed to Pay</button>
+</section>
+
+<section id="successPage" class="success hidden">
+  <h2>✅ Order Successful</h2>
+  <p>Thank you for choosing PowderRoot</p>
+  <button onclick="location.reload()">Back Home</button>
+</section>
+
+<footer>
+  © 2026 PowderRoot • Made in India 🇮🇳
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
