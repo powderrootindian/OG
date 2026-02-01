@@ -1,113 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PowderRoot | Premium Vegetable Powders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PowderRoot – Premium Vegetable Powders</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
+
 <body>
 
-<video autoplay muted loop id="bgVideo">
-  <source src="assets/bg.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
-<header>
-  <div class="brand">
-    <img src="assets/logo.png">
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="assets/logo.png" class="logo">
     <span>PowderRoot</span>
   </div>
+  <button id="loginBtn">Login</button>
+</nav>
 
-  <div class="social">
-    <a href="https://www.instagram.com/powderoots?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a>
-    <button id="loginBtn">Login</button>
-    <button id="bagBtn">🛍 Bag</button>
-  </div>
-</header>
-
-<main id="mainSite">
-
+<!-- HERO -->
 <section class="hero">
-  <h1>Selected Vegetable Powders</h1>
-  <p>Pure • Premium • Made in India 🇮🇳</p>
+  <h1>Pure Vegetable Powders</h1>
+  <p>Made in India • Premium Quality • Natural</p>
 </section>
 
-<section class="about">
-  <h2>About PowderRoot</h2>
-  <p>
-    PowderRoot is a premium Indian brand offering high-quality
-    vegetable powders made from carefully selected farm-fresh produce.
-  </p>
-</section>
-
-<section class="why">
-  <h2>Why Choose PowderRoot?</h2>
-  <div class="why-grid">
-    <div>🌿 100% Natural</div>
-    <div>🇮🇳 Made in India</div>
-    <div>🧪 No Preservatives</div>
-    <div>🥬 Premium Vegetables</div>
-    <div>📦 Hygienic Packaging</div>
-    <div>🚚 Fast Delivery</div>
-  </div>
-</section>
-
+<!-- PRODUCTS -->
 <section class="products">
   <div class="card">
-    <img src="assets/onion.png">
-    <h3>Onion Powder</h3>
-    <p class="desc">Rich in nutrients, perfect for daily health.</p>
-    <p class="price">₹299</p>
-    <button onclick="addToBag('Onion Powder',349)">Add to Bag</button>
-  </div>
-
-  <div class="card">
-    <img src="assets/garlic.png">
-    <h3>Garlic Powder</h3>
-    <p class="desc">Natural green nutrition in every scoop.</p>
-    <p class="price">₹349</p>
-    <button onclick="addToBag('Garlic Powder',299)">Add to Bag</button>
+    <img src="assets/product1.jpg">
+    <h3>Spinach Powder</h3>
+    <p>₹299</p>
+    <button onclick="addToBag('Spinach Powder',299)">Add to Bag</button>
   </div>
 </section>
 
-<section class="shipping">
-  <h2>Shipping & Delivery</h2>
-  <p>Orders ship within 24–48 hours. Delivery in 3–7 working days.</p>
-</section>
-
-<section class="contact">
-  <h2>Contact Us</h2>
-  <p>Email: powderrootindian@gmail.com</p>
-  <p>WhatsApp: +91 9096999662</p>
-</section>
-
-</main>
-
-<section id="bagPage" class="bag hidden">
+<!-- BAG -->
+<section class="bag">
   <h2>Your Bag</h2>
-  <div id="bagItems"></div>
 
-  <h3>Shipping Address</h3>
   <input id="name" placeholder="Full Name">
   <input id="phone" placeholder="Phone Number">
-  <input id="address" placeholder="Full Address">
+  <textarea id="address" placeholder="Shipping Address"></textarea>
   <input id="pincode" placeholder="Pincode">
 
-  <button onclick="checkout()">Proceed to Pay</button>
-</section>
-
-<section id="successPage" class="success hidden">
-  <h2>✅ Order Successful</h2>
-  <p>Thank you for choosing PowderRoot</p>
-  <button onclick="location.reload()">Back Home</button>
+  <button class="checkout" onclick="checkout()">Pay & Order</button>
 </section>
 
 <footer>
-  © 2026 PowderRoot • Made in India 🇮🇳
+  <p>© 2026 PowderRoot • Made in India 🇮🇳</p>
+  <a href="https://instagram.com/powderoots" target="_blank">Instagram</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
