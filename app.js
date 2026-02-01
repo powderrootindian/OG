@@ -1,58 +1,74 @@
-let cart = [];
-let total = 0;
-let currentUser = null;
+emailjs.init("lxY_3luPFEJNp2_dO");
 
-function addToCart(name, price){
-  cart.push({name, price});
-  total += price;
-  renderCart();
+let loggedIn = false;
+let bag = [];
+
+document.getElementById("loginBtn").onclick = () => {
+  const firebaseConfig = {
+  apiKey: "AIzaSyC-VwmmnGZBPGctP8bWp_ozBBTw45-eYds",
+  authDomain: "powderroot26.firebaseapp.com",
+  projectId: "powderroot26",
+  storageBucket: "powderroot26.firebasestorage.app",
+  messagingSenderId: "776300724322",
+  appId: "1:776300724322:web:44b8908b6ffe1f6596513b",
+  measurementId: "G-3GTKBEFJ2V"
+};
+  loggedIn = true;
+  document.getElementById("loginBtn").innerText = "Logged In ✔";
+};
+
+function addToBag(product, price) {
+  if (!loggedIn) {
+    alert("Login required");
+    return;
+  }
+  bag.push({ product, price });
+  alert(product + " added to bag");
 }
 
-function renderCart(){
-  const div = document.getElementById("cartItems");
-  div.innerHTML = "";
-  cart.forEach(i=>{
-    div.innerHTML += `<p>${i.name} - ₹${i.price}</p>`;
+document.getElementById("bagBtn").onclick = () => {
+  if (!loggedIn) {
+    alert("Login required");
+    return;
+  }
+
+  document.getElementById("mainSite").style.display = "none";
+  document.getElementById("bagPage").classList.remove("hidden");
+
+  const items = document.getElementById("bagItems");
+  items.innerHTML = "";
+  bag.forEach(i => {
+    items.innerHTML += `<p>${i.product} - ₹${i.price}</p>`;
   });
-  document.getElementById("total").innerText = total;
-}
+};
 
-function payNow(){
-  const address = document.getElementById("address").value.trim();
-  if(address === "") return alert("Please enter delivery address");
-  if(total === 0) return alert("Cart is empty");
+function checkout() {
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+  const pincode = document.getElementById("pincode").value;
 
-  const upi = "8788855688-2@ybl";
-  const url = `upi://pay?pa=${upi}&pn=PowderRoot&am=${total}&cu=INR`;
-  window.location.href = url;
-}
+  if (!name || !phone || !address || !pincode) {
+    alert("All fields are mandatory");
+    return;
+  }
 
-function confirmPaid(){
-  if(!currentUser) return alert("Please login first");
-
-  const address = document.getElementById("address").value.trim();
-  if(address === "") return alert("Address is required");
-
-  let items = cart.map(i => `${i.name} - ₹${i.price}`).join("<br>");
+  const total = bag.reduce((s,i)=>s+i.price,0);
 
   emailjs.send("service_cs926jb","template_ojt95o7",{
-    name: currentUser.displayName,
-    email: currentUser.email,
-    address: address,
-    items: items,
-    total: total
-  }).then(()=>{
-    alert("Order placed! Invoice sent to your email.");
-    cart = [];
-    total = 0;
-    document.getElementById("address").value = "";
-    renderCart();
+    name, phone, address, pincode,
+    items: JSON.stringify(bag),
+    total
   });
-}
 
-function login(){
-  signInWithPopup(auth, provider).then(result=>{
-    currentUser = result.user;
-    document.getElementById("loginBtn").innerText = currentUser.displayName;
-  });
+  window.location.href =
+    `upi://pay?pa=8788855688-2@ybl&pn=PowderRoot&am=${total}&cu=INR`;
+
+  setTimeout(() => {
+    window.open(
+      `https://wa.me/919096999662?text=New Order from PowderRoot ₹${total}`
+    );
+    document.getElementById("bagPage").classList.add("hidden");
+    document.getElementById("successPage").classList.remove("hidden");
+  },2000);
 }
