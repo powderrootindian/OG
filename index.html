@@ -1,79 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PowderRoot – Premium Vegetable Powders</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PowderRoot</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-(function(){
-  emailjs.init("lxY_3luPFEJNp2_dO");
-})();
-</script>
+  <!-- CINZEL FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
+<!-- BACKGROUND VIDEO -->
+<div class="video-bg">
+  <video autoplay muted loop playsinline>
+    <source src="videos/background.mp4" type="video/mp4">
+  </video>
+</div>
+
 <!-- NAVBAR -->
-<nav class="navbar">
-  <div class="nav-left">
-    <img src="assets/logo.png" class="logo">
-    <span class="brand">PowderRoot</span>
+<header class="navbar glass">
+  <div class="brand">
+    <img src="images/logo.png" class="logo">
+    <span>PowderRoot</span>
   </div>
 
   <div class="nav-right">
-    <div class="cart-icon" onclick="toggleBag()">
-      🛒
-      <span id="cartCount" class="cart-count">0</span>
+    <div id="userBox" class="hidden">
+      <img id="userPic">
+      <button id="logoutBtn">Logout</button>
     </div>
 
-    <img id="userPic" class="user-pic">
-    <button id="loginBtn">Login</button>
-    <button id="logoutBtn" style="display:none;">Logout</button>
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒 <span id="cartCount">0</span>
+    </div>
   </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <h1>Pure Vegetable Powders</h1>
-  <p>Premium • Natural • Made in India 🇮🇳</p>
-</section>
+</header>
 
 <!-- PRODUCTS -->
 <section class="products">
-  <div class="card">
-    <img src="assets/product1.jpg">
-    <h3>Spinach Powder</h3>
+  <div class="product glass">
+    <h3>Onion Powder</h3>
     <p>₹299</p>
-    <button onclick="addToBag('Spinach Powder',299)">Add to Bag</button>
+    <button onclick="addToCart('Onion Powder',299)">Add to Cart</button>
+  </div>
+
+  <div class="product glass">
+    <h3>Garlic powder</h3>
+    <p>₹179</p>
+    <button onclick="addToCart('Garlic powder',179)">Add to Cart</button>
   </div>
 </section>
 
-<!-- BAG -->
-<section class="bag hidden" id="bagSection">
-  <div class="bag-header">
-    <h2>Your Bag</h2>
-    <span class="close-bag" onclick="toggleBag()">✕</span>
-  </div>
-
-  <input id="name" placeholder="Full Name">
-  <input id="phone" placeholder="Phone Number">
-  <textarea id="address" placeholder="Shipping Address"></textarea>
-  <input id="pincode" placeholder="Pincode">
-
-  <button class="checkout" onclick="checkout()">Pay & Order</button>
+<!-- TRUST BAR -->
+<section class="trust glass">
+  <span>🌿 100% Natural</span>
+  <span>🇮🇳 Made in India</span>
+  <span>🔒 Trusted Orders</span>
 </section>
 
-<footer>
-  <p>© 2026 PowderRoot • Made in India</p>
-  <a href="https://instagram.com/powderoots" target="_blank">Instagram</a>
+<!-- CART -->
+<div id="cart" class="cart glass hidden">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <span class="close" onclick="toggleCart()">✕</span>
+  </div>
+
+  <div id="cartItems"></div>
+
+  <div class="cart-total">
+    <span>Total</span>
+    <strong id="totalAmount">₹0</strong>
+  </div>
+
+  <button class="checkout" onclick="placeOrder()">Pay & Order</button>
+</div>
+
+<!-- ORDER SUCCESS -->
+<div id="success" class="success hidden">
+  <div class="tick">✓</div>
+  <h2>Order Successful</h2>
+  <p>Thank you for trusting PowderRoot</p>
+</div>
+
+<!-- FOOTER -->
+<footer class="glass">
+  <a href="https://instagram.com/powderoots" target="_blank" class="insta">
+    <!-- Instagram SVG -->
+    <svg viewBox="0 0 24 24">
+      <path fill="#d4af37"
+        d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/>
+    </svg>
+  </a>
 </footer>
 
 <script src="app.js"></script>
