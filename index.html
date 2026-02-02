@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PowderRoot – Premium Vegetable Powders</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init("lxY_3luPFEJNp2_dO");
+})();
+</script>
 </head>
 
 <body>
@@ -19,30 +25,43 @@
 <nav class="navbar">
   <div class="nav-left">
     <img src="assets/logo.png" class="logo">
-    <span>PowderRoot</span>
+    <span class="brand">PowderRoot</span>
   </div>
-  <button id="loginBtn">Login</button>
+
+  <div class="nav-right">
+    <div class="cart-icon" onclick="toggleBag()">
+      🛒
+      <span id="cartCount" class="cart-count">0</span>
+    </div>
+
+    <img id="userPic" class="user-pic">
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <h1>Pure Vegetable Powders</h1>
-  <p>Made in India • Premium Quality • Natural</p>
+  <p>Premium • Natural • Made in India 🇮🇳</p>
 </section>
 
 <!-- PRODUCTS -->
 <section class="products">
   <div class="card">
     <img src="assets/product1.jpg">
-    <h3>Onion Powder</h3>
-    <p>₹349</p>
-    <button onclick="addToBag('Onion Powder',299)">Add to Bag</button>
+    <h3>Spinach Powder</h3>
+    <p>₹299</p>
+    <button onclick="addToBag('Spinach Powder',299)">Add to Bag</button>
   </div>
 </section>
 
 <!-- BAG -->
-<section class="bag">
-  <h2>Your Bag</h2>
+<section class="bag hidden" id="bagSection">
+  <div class="bag-header">
+    <h2>Your Bag</h2>
+    <span class="close-bag" onclick="toggleBag()">✕</span>
+  </div>
 
   <input id="name" placeholder="Full Name">
   <input id="phone" placeholder="Phone Number">
@@ -53,7 +72,7 @@
 </section>
 
 <footer>
-  <p>© 2026 PowderRoot • Made in India 🇮🇳</p>
+  <p>© 2026 PowderRoot • Made in India</p>
   <a href="https://instagram.com/powderoots" target="_blank">Instagram</a>
 </footer>
 
