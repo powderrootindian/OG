@@ -1,12 +1,10 @@
-// 🔥 FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyC-VwmmnGZBPGctP8bWp_ozBBTw45-eYds",
   authDomain: "powderroot26.firebaseapp.com",
   projectId: "powderroot26",
   storageBucket: "powderroot26.firebasestorage.app",
   messagingSenderId: "776300724322",
-  appId: "1:776300724322:web:44b8908b6ffe1f6596513b",
-  measurementId: "G-3GTKBEFJ2V"
+  appId: "1:776300724322:web:44b8908b6ffe1f6596513b"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -15,79 +13,94 @@ const auth = firebase.auth();
 let currentUser = null;
 let bag = [];
 
-// 🔐 LOGIN
+/* LOGIN */
 document.getElementById("loginBtn").onclick = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).catch(err => alert(err.message));
+  auth.signInWithPopup(provider);
 };
 
+document.getElementById("logoutBtn").onclick = () => {
+  auth.signOut();
+  bag = [];
+  document.getElementById("cartCount").innerText = "0";
+};
+
+/* AUTH STATE */
 auth.onAuthStateChanged(user => {
   if (user) {
     currentUser = user;
-    document.getElementById("loginBtn").innerText = "✔ Logged In";
+    document.getElementById("loginBtn").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "inline-block";
+    document.getElementById("userPic").src = user.photoURL;
+    document.getElementById("userPic").style.display = "block";
+  } else {
+    currentUser = null;
+    document.getElementById("loginBtn").style.display = "inline-block";
+    document.getElementById("logoutBtn").style.display = "none";
+    document.getElementById("userPic").style.display = "none";
   }
 });
 
-// 🛒 ADD TO BAG
+/* CART */
 function addToBag(name, price) {
-  if (!currentUser) {
-    alert("Please login to continue");
-    return;
-  }
+  if (!currentUser) return alert("Please login first");
+
   bag.push({ name, price });
-  alert(name + " added to bag");
+  const count = document.getElementById("cartCount");
+  count.innerText = bag.length;
+  count.style.animation = "none";
+  count.offsetHeight;
+  count.style.animation = "pop 0.3s ease";
 }
 
-// 💳 CHECKOUT + EMAIL + WHATSAPP
+function toggleBag() {
+  document.getElementById("bagSection").classList.toggle("hidden");
+}
+
+/* CHECKOUT */
 function checkout() {
   if (!currentUser) return alert("Login required");
 
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-  const pincode = document.getElementById("pincode").value;
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
 
   if (!name || !phone || !address || !pincode) {
-    alert("Please fill all details");
+    alert("Fill all details");
     return;
   }
 
-  const total = bag.reduce((sum, item) => sum + item.price, 0);
-  if (total <= 0) return alert("Your bag is empty");
+  if (bag.length === 0) return alert("Bag empty");
 
-  // 📧 EMAILJS SEND
-  emailjs.send(
-    "service_cs926jb",       // 🔁 replace
-    "template_ojt95o7",      // 🔁 replace
-    {
-      user_name: name,
-      user_email: currentUser.email,
-      order_details: bag.map(i => `${i.name} - ₹${i.price}`).join(", "),
-      total_amount: total,
-      shipping_address: `${address}, ${pincode}, Phone: ${phone}`
-    },
-    "lxY_3luPFEJNp2_dO"      // 🔁 replace
-  );
+  const total = bag.reduce((s, i) => s + i.price, 0);
 
-  // 📱 UPI PAYMENT
-  const upiUrl = `upi://pay?pa=8788855688-2@ybl&pn=PowderRoot&am=${total}&cu=INR`;
-  window.location.href = upiUrl;
+  /* UPI — MUST BE FIRST */
+  window.location.href =
+    `upi://pay?pa=8788855688-2@ybl&pn=PowderRoot&am=${total}&cu=INR`;
 
-  // 📲 WHATSAPP CONFIRMATION
+  /* BACKGROUND TASKS */
   setTimeout(() => {
-    const message =
-`New Order - PowderRoot 🌱
+    emailjs.send(
+      "service_cs926jb",
+      "template_ojt95o7",
+      {
+        user_name: name,
+        user_email: currentUser.email,
+        order_details: bag.map(i => i.name).join(", "),
+        total_amount: total,
+        shipping_address: `${address}, ${pincode}, Phone: ${phone}`
+      }
+    );
 
+    const msg =
+`New Order - PowderRoot 🌱
 Name: ${name}
 Phone: ${phone}
 Address: ${address}
 Pincode: ${pincode}
-
 Total: ₹${total}`;
 
-    window.open(
-      `https://wa.me/919096999662?text=${encodeURIComponent(message)}`,
-      "_blank"
-    );
-  }, 2000);
+    window.open(`https://wa.me/918788855688?text=${encodeURIComponent(msg)}`);
+  }, 1200);
 }
