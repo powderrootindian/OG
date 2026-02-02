@@ -101,6 +101,6 @@ Address: ${address}
 Pincode: ${pincode}
 Total: ₹${total}`;
 
-    window.open(`https://wa.me/918788855688?text=${encodeURIComponent(msg)}`);
+    window.open(`https://wa.me/919096999662?text=${encodeURIComponent(msg)}`);
   }, 1200);
 }
